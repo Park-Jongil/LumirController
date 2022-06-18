@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.899,=D:\Source\WorkRAD\01. LumirControl\ANT_PTN_Analysis.lib</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.981,=D:\Source\WorkRAD\01. LumirControl\BaseSocket.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.473,D:\Source\WorkRAD\01. LumirControl\BaseSocket.cpp=</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.005,D:\Source\WorkRAD\01. LumirControl\LumirController.cbproj=D:\Source\WorkRAD\Project1.cbproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.849,=D:\Source\WorkRAD\Unit1.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.503,D:\Source\WorkRAD\01. LumirControl\LumirControl.h=D:\Source\WorkRAD\Project1PCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.761,D:\Source\WorkRAD\01. LumirControl\frmLumirControl.dfm=D:\Source\WorkRAD\Unit1.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.761,D:\Source\WorkRAD\01. LumirControl\frmLumirControl.cpp=D:\Source\WorkRAD\Unit1.cpp</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.771,=D:\Source\WorkRAD\Project1PCH1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.761,D:\Source\WorkRAD\01. LumirControl\frmLumirControl.h=D:\Source\WorkRAD\Unit1.h</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.463,D:\Source\WorkRAD\01. LumirControl\ANT_PTN_Analysis_Lib.lib=</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.909,=D:\Source\WorkRAD\01. LumirControl\ANT_PTN_Analysis_Lib.lib</Transaction>
+  </Transactions>
+</BorlandProject>
