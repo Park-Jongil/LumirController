@@ -310,8 +310,15 @@ public:		// User declarations
 	void __fastcall Network_Analyzer_Query_Device();
 	void __fastcall Scanner_Control_EnableMenu();
 	AnsiString __fastcall Network_Analyzer_Receive_Data(int iLimitTime);
+// Scanner Control Functions
+	void __fastcall ScannerControl_FrequencyGrid_Update();
 
+// Calibration Functions
+	void __fastcall Calibration_FrequencyGrid_Update();
 
+// Measurement Functions
+	void __fastcall Measurement_FrequencyGrid_Update();
+	void __fastcall Measurement_FrequencyInfo_Update();
 
 };
 //---------------------------------------------------------------------------

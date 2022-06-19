@@ -13,6 +13,7 @@
 Tfrm_LumirControl *frm_LumirControl;
 //---------------------------------------------------------------------------
 Measurement_Setup   stMeasurementInfo;
+Scanner_Control     stScannerInfo;
 //---------------------------------------------------------------------------
 __fastcall Tfrm_LumirControl::Tfrm_LumirControl(TComponent* Owner)
 	: TForm(Owner)
@@ -73,6 +74,29 @@ void __fastcall Tfrm_LumirControl::SystemConfig_Load()
 			szFreqValue = ini->ReadString("MeasurementSetup",szFreqList,"");
 			ListBox1->Items->Add( szFreqValue );
 		}
+// Scanner Control
+		stScannerInfo.Move_Axis = ini->ReadInteger("ScannerControl","Move_Axis",1);
+		if (stScannerInfo.Move_Axis==0x01) RadioButton11->Checked = true;
+		 else if (stScannerInfo.Move_Axis==0x02) RadioButton12->Checked = true;
+		 else if (stScannerInfo.Move_Axis==0x03) RadioButton13->Checked = true;
+		 else if (stScannerInfo.Move_Axis==0x04) RadioButton14->Checked = true;
+		Edit19->Text = ini->ReadString("ScannerControl","X_Move_Pos","10");
+		Edit20->Text = ini->ReadString("ScannerControl","X_Move_Dis","10");
+		Edit27->Text = ini->ReadString("ScannerControl","X_Move_Speed","100");
+		Edit28->Text = ini->ReadString("ScannerControl","X_Move_Acc","4");
+		Edit21->Text = ini->ReadString("ScannerControl","Y_Move_Pos","10");
+		Edit22->Text = ini->ReadString("ScannerControl","Y_Move_Dis","10");
+		Edit29->Text = ini->ReadString("ScannerControl","Y_Move_Speed","100");
+		Edit30->Text = ini->ReadString("ScannerControl","Y_Move_Acc","4");
+		Edit23->Text = ini->ReadString("ScannerControl","Z_Move_Pos","10");
+		Edit24->Text = ini->ReadString("ScannerControl","Z_Move_Dis","10");
+		Edit31->Text = ini->ReadString("ScannerControl","Z_Move_Speed","10");
+		Edit32->Text = ini->ReadString("ScannerControl","Z_Move_Acc","2");
+		Edit25->Text = ini->ReadString("ScannerControl","P_Move_Pos","0");
+		Edit26->Text = ini->ReadString("ScannerControl","P_Move_Dis","90");
+		Edit33->Text = ini->ReadString("ScannerControl","P_Move_Speed","5");
+		Edit34->Text = ini->ReadString("ScannerControl","P_Move_Acc","1");
+
 
 	} catch(...) {
 	}
@@ -135,6 +159,25 @@ void __fastcall Tfrm_LumirControl::SystemConfig_Save()
 			szFreqList = "FreqList" + IntToStr(i+1);
 			ini->WriteString("MeasurementSetup",szFreqList,ListBox1->Items->Strings[i]);
 		}
+// Scanner Control
+		ini->WriteInteger("ScannerControl","Move_Axis",stScannerInfo.Move_Axis);
+		ini->WriteString("ScannerControl","X_Move_Pos",Edit19->Text);
+		ini->WriteString("ScannerControl","X_Move_Dis",Edit20->Text);
+		ini->WriteString("ScannerControl","X_Move_Speed",Edit27->Text);
+		ini->WriteString("ScannerControl","X_Move_Acc",Edit28->Text);
+		ini->WriteString("ScannerControl","Y_Move_Pos",Edit21->Text);
+		ini->WriteString("ScannerControl","Y_Move_Dis",Edit22->Text);
+		ini->WriteString("ScannerControl","Y_Move_Speed",Edit29->Text);
+		ini->WriteString("ScannerControl","Y_Move_Acc",Edit30->Text);
+		ini->WriteString("ScannerControl","Z_Move_Pos",Edit23->Text);
+		ini->WriteString("ScannerControl","Z_Move_Dis",Edit24->Text);
+		ini->WriteString("ScannerControl","Z_Move_Speed",Edit31->Text);
+		ini->WriteString("ScannerControl","Z_Move_Acc",Edit32->Text);
+		ini->WriteString("ScannerControl","P_Move_Pos",Edit25->Text);
+		ini->WriteString("ScannerControl","P_Move_Dis",Edit26->Text);
+		ini->WriteString("ScannerControl","P_Move_Speed",Edit33->Text);
+		ini->WriteString("ScannerControl","P_Move_Acc",Edit34->Text);
+
 	} catch(...) {
 	}
 }
@@ -156,10 +199,15 @@ void __fastcall Tfrm_LumirControl::BitBtn1Click(TObject *Sender)
 
 void __fastcall Tfrm_LumirControl::FormShow(TObject *Sender)
 {
-  BitBtn11->Caption = "Measurement\nStart";
+	BitBtn11->Caption = "Measurement\nStart";
 	ChartData_Initialize();
 	Scanner_Control_EnableMenu();
-  SystemConfig_Load();
+	SystemConfig_Load();
+	Scanner_Control_EnableMenu();         		// X 좌료로 초기화 설정
+	ScannerControl_FrequencyGrid_Update();    // Grid 초기화
+	Calibration_FrequencyGrid_Update();
+	Measurement_FrequencyGrid_Update();
+  Measurement_FrequencyInfo_Update();
 }
 
 //---------------------------------------------------------------------------
@@ -574,21 +622,25 @@ void __fastcall Tfrm_LumirControl::Scanner_Control_EnableMenu()
 		}
 	}
 	if (RadioButton11->Checked==true) {
+		stScannerInfo.Move_Axis = 1;
 		Edit19->Enabled = true;
 		Edit20->Enabled = true;
 		Edit27->Enabled = true;
 		Edit28->Enabled = true;
 	} else if (RadioButton12->Checked==true) {
+		stScannerInfo.Move_Axis = 2;
 		Edit21->Enabled = true;
 		Edit22->Enabled = true;
 		Edit29->Enabled = true;
 		Edit30->Enabled = true;
 	} else if (RadioButton13->Checked==true) {
+		stScannerInfo.Move_Axis = 3;
 		Edit23->Enabled = true;
 		Edit24->Enabled = true;
 		Edit31->Enabled = true;
 		Edit32->Enabled = true;
 	} else if (RadioButton14->Checked==true) {
+		stScannerInfo.Move_Axis = 4;
 		Edit25->Enabled = true;
 		Edit26->Enabled = true;
 		Edit33->Enabled = true;
@@ -713,7 +765,7 @@ void __fastcall Tfrm_LumirControl::BitBtn16Click(TObject *Sender)
 
 void __fastcall Tfrm_LumirControl::RadioButton11Click(TObject *Sender)
 {
-  Scanner_Control_EnableMenu();
+	Scanner_Control_EnableMenu();
 }
 //---------------------------------------------------------------------------
 
@@ -732,7 +784,16 @@ void __fastcall Tfrm_LumirControl::NA_TimerTimer(TObject *Sender)
 }
 
 //---------------------------------------------------------------------------
+// Scanner Control Functions
+//---------------------------------------------------------------------------
+void __fastcall Tfrm_LumirControl::ScannerControl_FrequencyGrid_Update()
+{
+	StringGrid1->Cells[0][0] = "Frequency";
+	StringGrid1->Cells[1][0] = "Amplitude";
+	StringGrid1->Cells[2][0] = "Phase";
+}
 
+//---------------------------------------------------------------------------
 void __fastcall Tfrm_LumirControl::SpeedButton3Click(TObject *Sender)
 {
 	double  CheckLimit;
@@ -788,4 +849,42 @@ void __fastcall Tfrm_LumirControl::SpeedButton6Click(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
+
+//---------------------------------------------------------------------------
+// Calibration Functions
+//---------------------------------------------------------------------------
+void __fastcall Tfrm_LumirControl::Calibration_FrequencyGrid_Update()
+{
+	StringGrid2->Cells[0][0] = "Frequency";
+	StringGrid2->Cells[1][0] = "Amplitude";
+	StringGrid2->Cells[2][0] = "Phase";
+}
+
+//---------------------------------------------------------------------------
+// Measurement Functions
+//---------------------------------------------------------------------------
+void __fastcall Tfrm_LumirControl::Measurement_FrequencyGrid_Update()
+{
+	StringGrid3->Cells[0][0] = "Frequency";
+}
+
+void __fastcall Tfrm_LumirControl::Measurement_FrequencyInfo_Update()
+{
+	StringGrid4->ColWidths[0] = 80;
+	StringGrid4->ColWidths[1] = 60;
+	StringGrid4->ColWidths[2] = 40;
+	StringGrid4->Cells[0][0] = "Frequency";
+	StringGrid4->Cells[1][0] = "5.1";     // Display Frequency
+	StringGrid4->Cells[2][0] = "GHz";
+	StringGrid4->Cells[0][1] = "X Start";
+	StringGrid4->Cells[0][2] = "X Stop";
+	StringGrid4->Cells[0][3] = "Y Start";
+	StringGrid4->Cells[0][4] = "Y Stop";
+	StringGrid4->Cells[0][5] = "X Strp";
+	StringGrid4->Cells[0][6] = "Y Strp";
+	StringGrid4->Cells[0][7] = "Start Time";
+	StringGrid4->Cells[0][8] = "Stop Time";
+	StringGrid4->Cells[0][9] = "Time Remain";
+	StringGrid4->Cells[0][10] = "Cut";
+}
 

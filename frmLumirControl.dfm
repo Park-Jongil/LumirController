@@ -21,7 +21,7 @@ object frm_LumirControl: Tfrm_LumirControl
     Top = 0
     Width = 1008
     Height = 542
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet1: TTabSheet
@@ -2032,7 +2032,6 @@ object frm_LumirControl: Tfrm_LumirControl
               Width = 381
               Height = 21
               TabOrder = 0
-              Text = 'Edit39'
             end
           end
         end
@@ -2050,8 +2049,8 @@ object frm_LumirControl: Tfrm_LumirControl
         ParentBackground = False
         TabOrder = 0
         object GroupBox20: TGroupBox
-          Left = 15
-          Top = 16
+          Left = 10
+          Top = 11
           Width = 138
           Height = 489
           Caption = ' Frequency '
@@ -2067,12 +2066,13 @@ object frm_LumirControl: Tfrm_LumirControl
             FixedCols = 0
             RowCount = 16
             Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goFixedRowDefAlign]
+            ScrollBars = ssVertical
             TabOrder = 0
           end
         end
         object GroupBox21: TGroupBox
-          Left = 159
-          Top = 16
+          Left = 154
+          Top = 11
           Width = 635
           Height = 489
           Caption = ' Data '
@@ -2153,16 +2153,16 @@ object frm_LumirControl: Tfrm_LumirControl
           end
         end
         object GroupBox22: TGroupBox
-          Left = 800
-          Top = 16
-          Width = 185
-          Height = 234
+          Left = 794
+          Top = 11
+          Width = 195
+          Height = 197
           Caption = ' Measurement '
           TabOrder = 2
           object BitBtn11: TBitBtn
-            Left = 16
-            Top = 40
-            Width = 161
+            Left = 8
+            Top = 21
+            Width = 181
             Height = 81
             Caption = 'Measurement'
             Font.Charset = ANSI_CHARSET
@@ -2174,9 +2174,9 @@ object frm_LumirControl: Tfrm_LumirControl
             TabOrder = 0
           end
           object BitBtn12: TBitBtn
-            Left = 16
-            Top = 137
-            Width = 161
+            Left = 8
+            Top = 108
+            Width = 181
             Height = 81
             Caption = 'STOP'
             Font.Charset = ANSI_CHARSET
@@ -2189,21 +2189,31 @@ object frm_LumirControl: Tfrm_LumirControl
           end
         end
         object GroupBox23: TGroupBox
-          Left = 800
-          Top = 256
-          Width = 185
-          Height = 249
+          Left = 795
+          Top = 214
+          Width = 195
+          Height = 286
           Caption = ' Information '
           TabOrder = 3
           object StringGrid4: TStringGrid
-            Left = 8
-            Top = 19
-            Width = 171
-            Height = 223
+            Left = 5
+            Top = 24
+            Width = 186
+            Height = 246
             ColCount = 3
-            DefaultColWidth = 55
+            DefaultColWidth = 60
+            DefaultRowHeight = 21
             FixedCols = 0
+            RowCount = 11
+            FixedRows = 0
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = #44404#47548#52404
+            Font.Style = []
             Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect, goFixedRowDefAlign]
+            ParentFont = False
+            ScrollBars = ssNone
             TabOrder = 0
           end
         end
@@ -2373,27 +2383,27 @@ object frm_LumirControl: Tfrm_LumirControl
   object SaveDialog1: TSaveDialog
     DefaultExt = '*.PNF'
     Filter = #52769#51221#54532#47196#44536#47016' '#51221#48372#54028#51068'(*.PNF)|*.PNF'
-    Left = 875
-    Top = 20
+    Left = 707
+    Top = 4
   end
   object IdTCPClient1: TIdTCPClient
     Intercept = IdConnectionIntercept1
     ConnectTimeout = 0
     Port = 0
     ReadTimeout = 2000
-    Left = 700
-    Top = 17
+    Left = 628
+    Top = 1
   end
   object IdConnectionIntercept1: TIdConnectionIntercept
     OnReceive = IdConnectionIntercept1Receive
-    Left = 836
-    Top = 17
+    Left = 668
+    Top = 1
   end
   object NA_Timer: TTimer
     Enabled = False
     Interval = 100
     OnTimer = NA_TimerTimer
-    Left = 924
-    Top = 25
+    Left = 748
+    Top = 1
   end
 end
